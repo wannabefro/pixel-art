@@ -1,28 +1,19 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import PixelGrid from './PixelGrid';
+import { Provider } from './PixelContext';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
-}
+const DEFAULT_DIMENSIONS = { width: 16, height: 16 };
+const DEFAULT_COLOUR = '#000';
+
+const App = () => {
+  const [{ width, height }, setDimensions] = useState(DEFAULT_DIMENSIONS);
+  const [colour, setColour] = useState(DEFAULT_COLOUR);
+
+  return (
+    <Provider value={{ colour }}>
+      <PixelGrid width={width} height={height} />
+    </Provider>
+  )
+};
 
 export default App;
