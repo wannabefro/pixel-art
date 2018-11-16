@@ -9,15 +9,21 @@ const styles = {
   },
 };
 
-const PixelContainer = ({ classes }) => {
+const PixelContainer = ({ classes, mouseDown }) => {
   const { colour } = useContext(PixelContext);
   const [fillColour, setFillColour] = useState(null);
+  const fill = () => {
+    if (mouseDown) return setFillColour(colour);
+
+    fillColour === colour ? setFillColour(null) : setFillColour(colour);
+  }
 
   return (
     <div className={classes.pixelContainer}>
       <Pixel
         fillColour={fillColour}
-        onClick={() => fillColour === colour ? setFillColour(null) : setFillColour(colour)}
+        onMouseDown={fill}
+        onMouseOver={() => mouseDown && fill()}
       />
     </div>
   );

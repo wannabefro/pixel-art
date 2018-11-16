@@ -8,8 +8,12 @@ const styles = {
   }),
 };
 
-const Pixel = ({ classes, onClick }) => (
-  <div className={classes.pixel} onClick={onClick} />
+const Pixel = ({ classes, onMouseOver, onMouseDown }) => (
+  <div
+    className={classes.pixel}
+    onMouseOver={onMouseOver}
+    onMouseDown={onMouseDown}
+  />
 );
 
 const StyledPixel = injectSheet(styles)(Pixel);
