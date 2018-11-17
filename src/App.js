@@ -17,6 +17,14 @@ const styles = {
 const App = ({ classes }) => {
   const [{ width, height }, setDimensions] = useState(DEFAULT_DIMENSIONS);
   const [colour, setColour] = useState(DEFAULT_COLOUR);
+  const [forceFill, setForceFill] = useState(null);
+  const onClear = () => {
+    setForceFill('#fff');
+  }
+
+  const onFill = () => {
+    setForceFill(colour);
+  }
 
   return (
     <Provider value={{ colour }}>
@@ -29,8 +37,15 @@ const App = ({ classes }) => {
 
           height={height}
           onHeightChange={(e) => setDimensions({ height: e.target.value, width })}
+
+          onClear={onClear}
+          onFill={onFill}
         />
-        <PixelGrid width={Number(width)} height={Number(height)} />
+        <PixelGrid
+          width={Number(width)}
+          height={Number(height)}
+          forceFill={forceFill}
+        />
       </div>
     </Provider>
   )

@@ -4,7 +4,7 @@ import PixelContainer from './PixelContainer';
 import useWindowSize from './useWindowSize';
 import { Stage, Layer } from 'react-konva';
 
-const PixelGrid = ({ width, height}) => {
+const PixelGrid = ({ width, height, forceFill }) => {
   const pixels = Array.from(Array(height).fill(Array.from(Array(width))));
   const [mouseDown, setMouseDown] = useState(false);
   const { windowWidth, windowHeight } = useWindowSize();
@@ -25,6 +25,7 @@ const PixelGrid = ({ width, height}) => {
             <PixelContainer
               key={`${i}:${j}`}
               colour={colour}
+              forceFill={forceFill}
               mouseDown={mouseDown}
               width={pixelWidth}
               height={pixelHeight}

@@ -6,12 +6,17 @@ class PixelContainer extends React.Component {
     fillColour: null,
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.forceFill !== prevProps.forceFill) {
+      this.setState({ fillColour: this.props.forceFill });
+    }
+  }
+
   setFillColour = fillColour => {
     this.setState({ fillColour });
   }
 
   fill = () => {
-    const that = this;
     const { mouseDown, colour } = this.props;
     const { fillColour } = this.state;
 
