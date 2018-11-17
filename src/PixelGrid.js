@@ -1,30 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import PixelContext from './PixelContext';
 import PixelContainer from './PixelContainer';
-import injectSheet from 'react-jss';
+import useWindowSize from './useWindowSize';
+import { Stage, Layer } from 'react-konva';
 
-const styles = {
-  pixelGrid: (props) => ({
-    display: 'grid',
-    'grid-template-rows': `repeat(${props.height}, ${90 / props.height}vh)`,
-    'grid-template-columns': `repeat(${props.width}, 1fr)`,
-  }),
-}
-
-const PixelGrid = ({ classes, width, height}) => {
-  const pixels = Array.from(Array(width * height));
+const PixelGrid = ({ width, height}) => {
+  const pixels = Array.from(Array(height).fill(Array.from(Array(width))));
   const [mouseDown, setMouseDown] = useState(false);
+  const { windowWidth, windowHeight } = useWindowSize();
+  const pixelWidth = windowWidth / width;
+  const pixelHeight = windowHeight / height;
+  const { colour } = useContext(PixelContext);
 
   return (
-    <div
-      className={classes.pixelGrid}
+    <Stage
+      width={windowWidth}
+      height={windowHeight}
       onMouseDown={() => setMouseDown(true)}
       onMouseUp={() => setMouseDown(false)}
     >
-      {pixels.map((el, i) => <PixelContainer mouseDown={mouseDown} key={i} />)}
-    </div>
+      <Layer>
+        {pixels.map((row, i) => (
+          row.map((col, j) => (
+            <PixelContainer
+              key={`${i}:${j}`}
+              colour={colour}
+              mouseDown={mouseDown}
+              width={pixelWidth}
+              height={pixelHeight}
+              x={j * pixelWidth}
+              y={i * pixelHeight}
+            />
+          )
+          )
+        )
+        ).flat()}
+      </Layer>
+    </Stage>
   )
 };
 
-const StyledPixelGrid = injectSheet(styles)(PixelGrid);
-
-export default StyledPixelGrid;
+export default PixelGrid;

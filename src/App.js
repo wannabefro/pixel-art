@@ -30,7 +30,7 @@ const App = ({ classes }) => {
           height={height}
           onHeightChange={(e) => setDimensions({ height: e.target.value, width })}
         />
-        <PixelGrid width={width} height={height} />
+        <PixelGrid width={Number(width)} height={Number(height)} />
       </div>
     </Provider>
   )
