@@ -3,9 +3,11 @@ import injectSheet from 'react-jss';
 import PixelGrid from './PixelGrid';
 import Toolbar from './Toolbar';
 import { Provider } from './PixelContext';
+import useKeydown from './useKeydown';
 
 const DEFAULT_DIMENSIONS = { width: 16, height: 16 };
 const DEFAULT_COLOUR = '#00F';
+const SHIFT_KEY = 16;
 
 const styles = {
   container: {
@@ -25,6 +27,7 @@ const App = ({ classes }) => {
   const onFill = () => {
     setForceFill(colour);
   }
+  const undo = useKeydown(SHIFT_KEY);
 
   return (
     <Provider value={{ colour }}>
@@ -40,8 +43,11 @@ const App = ({ classes }) => {
 
           onClear={onClear}
           onFill={onFill}
+
+          undo={undo}
         />
         <PixelGrid
+          undo={undo}
           width={Number(width)}
           height={Number(height)}
           forceFill={forceFill}

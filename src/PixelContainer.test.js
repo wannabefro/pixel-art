@@ -19,6 +19,7 @@ describe('PixelContainer', () => {
         width={20}
         height={20}
         mouseDown={false}
+        undo={false}
         colour='#fff'
         forceFill='#000'
       />,

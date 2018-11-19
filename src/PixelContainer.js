@@ -12,17 +12,11 @@ class PixelContainer extends React.Component {
     }
   }
 
-  setFillColour = fillColour => {
-    this.setState({ fillColour });
-  }
-
-  fill = () => {
-    const { mouseDown, colour } = this.props;
-    const { fillColour } = this.state;
-
-    if (mouseDown) return this.setFillColour(colour);
-
-    fillColour === colour ? this.setFillColour(null) : this.setFillColour(colour);
+  setFillColour = () => {
+    const { undo } = this.props;
+    const { colour } = this.props;
+    const newColour = undo ? null : colour;
+    this.setState({ fillColour: newColour });
   }
 
   render() {
@@ -37,8 +31,8 @@ class PixelContainer extends React.Component {
         width={width}
         height={height}
         stroke='black'
-        onMouseDown={this.fill}
-        onMouseOver={() => mouseDown && this.fill()}
+        onMouseDown={this.setFillColour}
+        onMouseOver={() => mouseDown && this.setFillColour()}
       />
     );
   }
